@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h3 {
+    margin: 25px;
+    padding-top: 25px;
+}
+
+body {
+    height: 100vh;
+    flex-direction: column;
+    font-family: sans-serif;
+    color: white;
+}
+
+ .navbar {
+    background: linear-gradient(rgb(47, 150, 163), rgb(48, 62, 143));
+
+
+ }
+
+ /* Styles for wrapping the search box */
+
+.main {
+    width: 50%;
+    margin: 50px auto;
+}
+
+/* Bootstrap 4 text input with search icon */
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+
+.input-group {
+margin-top: 15px;
+}
