@@ -1,18 +1,17 @@
 $(document).ready(function () {
-
     let currentDay = moment().format('L');
     var apiKey = "appid=797daeffdb6701215dfbc71cc3c18753";
-    // var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + userCity + "&appid=797daeffdb6701215dfbc71cc3c18753"
+   
     // var userInput = "tempe";
     let days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"];
 
-
-
+    
 
     // Retrieve weather data from API when City Name is submitted 
     function getWeatherData(cityName) {
 
-        console.log("here")
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=797daeffdb6701215dfbc71cc3c18753"
+
 
         $.ajax({
             url: queryURL,
@@ -54,15 +53,14 @@ $(document).ready(function () {
                 card.append(dayDate, dayIcon, dayTemp, dayHumidity);
             }
 
-
         });
-
-        // Retrieves data after clicking search button 
-        $(".btn").on('click', function () {
-            console.log("here2")
-            cityName = $(this).siblings("#inputValue").val();
-            getWeatherData(cityName);
-        })
-
     }
+
+
+    // Retrieves data after clicking search button 
+    $(".btn").on('click', function () {
+        cityName = $(this).siblings("#inputValue").val();
+        getWeatherData(cityName);
+    })
+
 });
