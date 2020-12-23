@@ -1,62 +1,86 @@
 $(document).ready(function () {
-    let currentDay = moment().format('L');
-    var apiKey = "appid=797daeffdb6701215dfbc71cc3c18753";
-   
-    // var userInput = "tempe";
-    let days = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"];
 
-    
+    // Declaring global variables
+    let currentDay = moment().format("MMM Do YY");
+    let apiKey = "&appid=797daeffdb6701215dfbc71cc3c18753";
+    let days = ["Day1", "Day2", "Day3", "Day4", "Day5"];
+
 
     // Retrieve weather data from API when City Name is submitted 
     function getWeatherData(cityName) {
 
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=797daeffdb6701215dfbc71cc3c18753"
-
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
+            cityName +
+            apiKey
 
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
 
-            let temperature = response.main.temp
+            // Setting data from API for Current day weather 
+            let imgIcon = $('<img class="icon">');
+            imgIcon.attr("src", "https://openweathermap.org/img/wn/" + response.weather[0].icon + ".png")
+            let currentFarenheit = (((response.main.temp - 273.15) * 9 / 5) + 32).toFixed();
             let humidity = response.main.humidity
             let windSpeed = response.wind.speed
-            let icon = response.weather[0].icon
+
+            // Displaying data from Current day weather
+            $("#cityTimeDisplay").text(cityName + " " + "(" + currentDay + ")").append(imgIcon)
+            $("#tempDisplay").text("Temp: " + currentFarenheit + " \u00B0F")
+            $("#humidityDisplay").text("Humidity: " + humidity + "%")
+            $("#windspeedDisplay").text("Wind Speed: " + windSpeed + " Mph")
 
 
-            $("#cityTimeDisplay").text(cityName + " " + currentDay)
-            $("#tempDisplay").text("Temperature: " + temperature)
-            $("#humidityDisplay").text("Humidity: " + humidity)
-            $("#windspeedDisplay").text("Wind Speed: " + windSpeed)
+            //Ajax call to get 5 day forecast data
+            let oneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+                response.coord.lat +
+                "&lon=" +
+                response.coord.lon +
+                apiKey
 
+            $.ajax({
+                url: oneCallURL,
+                method: "GET"
+            }).then(function (response) {
+                console.log(response)
 
-            console.log(response)
+                // Generate 5 day forecast 
+                $('.forecastHeader').text("5 Day Forecast");
 
+                for (let i = 0; i < days.length; i++) {
 
-            // Generate 5 day forecast 
-            $('#WeekForecast').text("5 Day Forecast");
+                    //  Creating elements for 5 day forecast
+                    let card = $('<div class="card">');
+                    let dayDate = $('<p ="card-title">')
+                    let imgClass = $('<img class="icon">');
+                    let dayTemp = $('<p = "card-text">')
+                    let dayHumidity = $('<p = "card-text">')
 
-            for (let i = 0; i < days.length; i++) {
+                    // Declaring/converting data to created elements 
+                    let forecastDay = response.daily[i].dt * 1000;
+                    let convertedDate = new Date(forecastDay);
+                    forecastDay = convertedDate.toDateString();
+                    let humidity = response.daily[i].humidity
+                    let dailyIcon = response.daily[i].weather[0].icon
+                    let weekFarenheit = ((response.daily[i].temp.day - 273.15) * (9 / 5) + 32).toFixed();
 
-                let card = $('<div class="card">');
-                let dayDate = $('<p ="card-title">')
-                let dayIcon = $('<img>')
-                let dayTemp = $('<p = "card-text">')
-                let dayHumidity = $('<p = "card-text">')
+                    // Setting data values 
+                    dayDate.text(forecastDay)
+                    imgClass.attr("src", "https://openweathermap.org/img/wn/" + dailyIcon + ".png");
+                    dayTemp.text("Temp: " + weekFarenheit + " \u00B0F")
+                    dayHumidity.text("Humidity: " + humidity + "%")
 
-                dayDate.text(currentDay)
-                dayIcon.text('icon')
-                dayTemp.text(temperature)
-                dayHumidity.text(humidity)
+                    // Appending elements and data 
+                    $('#WeekForecast').append(card);
+                    card.append(dayDate, imgClass, dayTemp, dayHumidity);
+                }
 
-                $('#WeekForecast').append(card);
-                card.append(dayDate, dayIcon, dayTemp, dayHumidity);
-            }
+            });
+        }
 
-        });
+        )
     }
-
-
     // Retrieves data after clicking search button 
     $(".btn").on('click', function () {
         cityName = $(this).siblings("#inputValue").val();
