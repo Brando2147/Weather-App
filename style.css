@@ -1,25 +1,45 @@
 * {
-    margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-h3 {
-    margin: 25px;
-    padding-top: 25px;
+    margin: 0;
 }
 
 body {
-    height: 100vh;
-    flex-direction: column;
-    font-family: sans-serif;
-    color: white;
+    background-image: url("./Assets/SkyBackground.jpg")
+
 }
 
- .navbar {
-    background: linear-gradient(rgb(47, 150, 163), rgb(48, 62, 143));
+h3 {
+    margin-top: 25px;
+ }
 
+h2  {
+    padding-top: 10px;
+}
 
+.input-group {
+    padding: 10px 0px 10px 0px; 
+}
+
+h4 {
+    padding-top: 15px;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #23395D;
+    color: #b2bec3;
+
+}
+
+ #floatCard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding-top: 2px;
+    margin: 10px;
+    background-color:   #101826;
+    color: #b2bec3;
+    opacity: 0.9;
+    width: 100%;
  }
 
  /* Styles for wrapping the search box */
@@ -46,8 +66,44 @@ body {
     color: #aaa;
 }
 
+img {
+    width: 65px;
+}
+
 
 .input-group {
 margin-top: 15px;
 }
+ 
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: #23395D;
+    color: #b2bec3;
+    opacity: 0.9;
+    position: relative;
+    flex-direction: column;
+    word-wrap: break-word;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+
+}
+
+
+
+#WeekForecast {
+    padding: 20px;
+    margin: 20px 10px 40px 10px;
+    border-radius: 15px;
+    border-color: #b2bec3;
+    border-width: 0.5px;
+}
+
  
